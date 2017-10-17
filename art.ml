@@ -33,9 +33,7 @@ let rec build (rand,depth) =
         | 1 -> buildCosine(build (rand,newDepth))
         | 2 -> buildAverage(build (rand,newDepth),build (rand,newDepth))
         | 3 -> buildTimes(build (rand,newDepth),build (rand,newDepth))
-        | 4 -> buildThresh(build (rand,newDepth),build (rand,newDepth),build (rand,newDepth),build (rand,newDepth)) 
-        | _ -> buildX()
-;;         
+        | _ -> buildThresh(build (rand,newDepth),build (rand,newDepth),build (rand,newDepth),build (rand,newDepth))          
 
 
 let rec build2 (rand,depth) =  
@@ -54,8 +52,55 @@ let rec build2 (rand,depth) =
         | 3 -> buildTimes(build2 (rand,newDepth),build2 (rand,newDepth))
         | 4 -> buildThresh(build2 (rand,newDepth),build2 (rand,newDepth),build2 (rand,newDepth),build2 (rand,newDepth))
         | 5 -> buildAvgOfThree(build2 (rand,newDepth),build2 (rand,newDepth),build2 (rand,newDepth))
-        | 6 -> buildSquare(build2 (rand,newDepth))
-        | _ -> buildX()
+        | _ -> buildSquare(build2 (rand,newDepth))
+
+(*
+let rec build (rand,depth) = 
+  let pumping = 1+rand(0,7) in
+  let alternate = rand(0, pumping) in
+  if depth == 0 then (
+    if alternate mod 2 == 0 then
+      buildX() 
+    else
+      buildY()
+  )
+  else begin
+    let x = rand(0,9) in
+      let result = match x with
+      |0 -> build(rand, (depth-1))
+      |1 -> build(rand, (depth-1))
+      |2 -> buildSine(build(rand, (depth-1))) 
+      |3 -> buildCosine(build(rand, (depth - 1)))
+      |4 -> buildAverage(build(rand, (depth-1)),build(rand, (depth-1)))
+      |5 -> buildTimes(build(rand, (depth-1)),build(rand, (depth-1)))
+      |_ -> buildThresh(build(rand, (depth-1)),build(rand, (depth-1)),build(rand, (depth-1)),build(rand, (depth-1)))
+    in result
+  end
+
+let rec build2 (rand,depth) = 
+ let pumping = 1+rand(0,7) in
+  let alternate = rand(0, pumping) in
+  if depth == 0 then (
+    if alternate mod 2 == 0 then
+      buildX() 
+    else
+      buildY()
+  )
+  else begin
+    let x = rand(0,9) in
+      let result = match x with
+      |0 -> build(rand, (depth-1))
+      |1 -> build(rand, (depth-1))
+      |2 -> buildSine(build(rand, (depth-1))) 
+      |3 -> buildCosine(build(rand, (depth - 1)))
+      |4 -> buildAverage(build(rand, (depth-1)),build(rand, (depth-1)))
+      |5 -> buildTimes(build(rand, (depth-1)),build(rand, (depth-1)))
+      |6 -> buildSquare(build(rand, (depth-1)))
+      |7 -> buildAvgOfThree(build(rand, (depth-1)),build(rand, (depth-1)),build(rand, (depth-1)))
+      |_ -> buildThresh(build(rand, (depth-1)),build(rand, (depth-1)),build(rand, (depth-1)),build(rand, (depth-1)))
+    in result
+  end
+*)
 
 (* Please fill in ALL of g1,g2,g3,c1,c2,c3 regardless of whether you
  * are aiming for extra credit. 
