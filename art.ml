@@ -19,40 +19,43 @@
    the expression.
 *)
 
-let rec build (rand,depth) =
-  if depth = 0 then
+let rec build (rand,depth) =   
+  if depth == 0 then
     let r1 = rand(0,2) in
       match r1 with
         | 0 -> buildX()
         | 1 -> buildY()
   else
+    let newDepth = (depth - 1) in
     let r2 = rand(0,5) in
       match r2 with
-        | 0 -> buildSine(build (rand,depth-1))
-        | 1 -> buildCosine(build (rand,depth-1))
-        | 2 -> buildAverage(build (rand,depth-1),build (rand,depth-1))
-        | 3 -> buildTimes(build (rand,depth-1),build (rand,depth-1))
-        | 4 -> buildThresh(build (rand,depth-1),build (rand,depth-1),build (rand,depth-1),build (rand,depth-1)) 
-           
+        | 0 -> buildSine(build (rand,newDepth))
+        | 1 -> buildCosine(build (rand,newDepth))
+        | 2 -> buildAverage(build (rand,newDepth),build (rand,newDepth))
+        | 3 -> buildTimes(build (rand,newDepth),build (rand,newDepth))
+        | 4 -> buildThresh(build (rand,newDepth),build (rand,newDepth),build (rand,newDepth),build (rand,newDepth)) 
+        | _ -> buildX()
+;;         
 
 
-let rec build2 (rand,depth) = 
-  if depth = 0 then
+let rec build2 (rand,depth) =  
+  if depth == 0 then
     let r1 = rand(0,2) in
       match r1 with
         | 0 -> buildX()
         | 1 -> buildY()
   else
+    let newDepth = (depth -1) in
     let r2 = rand(0,7) in
       match r2 with
-        | 0 -> buildSine(build (rand,depth-1))
-        | 1 -> buildCosine(build (rand,depth-1))
-        | 2 -> buildAverage(build (rand,depth-1),build (rand,depth-1))
-        | 3 -> buildTimes(build (rand,depth-1),build (rand,depth-1))
-        | 4 -> buildThresh(build (rand,depth-1),build (rand,depth-1),build (rand,depth-1),build (rand,depth-1))
-        | 5 -> buildSumOfThree(build (rand,depth-1),build (rand,depth-1),build (rand,depth-1))
-        | 6 -> buildSquare(build (rand,depth-1))
-
+        | 0 -> buildSine(build2 (rand,newDepth))
+        | 1 -> buildCosine(build2 (rand,newDepth))
+        | 2 -> buildAverage(build2 (rand,newDepth),build2 (rand,newDepth))
+        | 3 -> buildTimes(build2 (rand,newDepth),build2 (rand,newDepth))
+        | 4 -> buildThresh(build2 (rand,newDepth),build2 (rand,newDepth),build2 (rand,newDepth),build2 (rand,newDepth))
+        | 5 -> buildAvgOfThree(build2 (rand,newDepth),build2 (rand,newDepth),build2 (rand,newDepth))
+        | 6 -> buildSquare(build2 (rand,newDepth))
+        | _ -> buildX()
 
 (* Please fill in ALL of g1,g2,g3,c1,c2,c3 regardless of whether you
  * are aiming for extra credit. 
@@ -64,21 +67,13 @@ let rec build2 (rand,depth) =
  * they should return (depth,seed1,seed2)
  *)
 
-let g1 () = (8,8,20) 
-let g2 () = (4,8,12)  
-let g3 () = (3,9,25)
+let g1 () = (8,13,14)  
+let g2 () = (8,23,32)
+let g3 () = (10,22,25)
 
-let c1 () = (10,15,12)
-let c2 () = (2,20,40)
-let c3 () = (5,50,70) 
-
-(*let g1 () = (4,13,14)  
-let g2 () = (7,23,32)
-let g3 () = (11,22,25)
-
-let c1 () = (2,5,14)
-let c2 () = (5,12,15)
-let c3 () = (8,17,20)*)
+let c1 () = (10,5,14)
+let c2 () = (10,12,15)
+let c3 () = (11,17,20)
 
 (**** You should not need to modify any code below here ****)
 

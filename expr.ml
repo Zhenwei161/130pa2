@@ -20,7 +20,7 @@ type expr =
   | Average    of expr * expr
   | Times      of expr * expr
   | Thresh     of expr * expr * expr * expr	
-  | SumOfThree of expr * expr * expr
+  | AvgOfThree of expr * expr * expr
   | Square of expr
 
 let rec exprToString e = 
@@ -32,7 +32,7 @@ let rec exprToString e =
     | Average (a,b) -> Printf.sprintf "((%s+%s)/2)" (exprToString a) (exprToString b) 
     | Times (a,b) -> Printf.sprintf "%s*%s" (exprToString a) (exprToString b)
     | Thresh (a,b,c,d) -> Printf.sprintf "(%s<%s?%s:%s)" (exprToString a) (exprToString b) (exprToString c) (exprToString d)
-    | SumOfThree (a,b,c) -> Printf.sprintf "(%s+%s+%s)" (exprToString a) (exprToString b) (exprToString c)
+    | AvgOfThree (a,b,c) -> Printf.sprintf "((%s+%s+%s)/2)" (exprToString a) (exprToString b) (exprToString c)
     | Square a -> Printf.sprintf "(%s^2)" (exprToString a)
  
 (* build functions:
@@ -47,7 +47,7 @@ let buildCosine(e)                 = Cosine(e)
 let buildAverage(e1,e2)            = Average(e1,e2)
 let buildTimes(e1,e2)              = Times(e1,e2)
 let buildThresh(a,b,a_less,b_less) = Thresh(a,b,a_less,b_less)
-let buildSumOfThree(e1,e2,e3)      = SumOfThree(e1,e2,e3)
+let buildAvgOfThree(e1,e2,e3)      = AvgOfThree(e1,e2,e3)
 let buildSquare(e)		   = Square(e)
 
 
@@ -62,7 +62,7 @@ let rec eval (e,x,y) =
     | Average (a,b) -> (eval (a,x,y) +. eval (b,x,y)) /. 2.0
     | Times (a,b) -> eval (a,x,y) *. eval (b,x,y)
     | Thresh (a,b,c,d) -> if eval (a,x,y) < eval (b,x,y) then eval (c,x,y) else eval (d,x,y)
-    | SumOfThree (a,b,c) -> eval (a,x,y) +. eval (b,x,y) +. eval (c,x,y)
+    | AvgOfThree (a,b,c) -> (eval (a,x,y) +. eval (b,x,y) +. eval (c,x,y)) /. 3.0
     | Square a -> eval(a,x,y) *. eval (a,x,y)
    
 
